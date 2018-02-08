@@ -10,7 +10,11 @@ BLUE = (0, 0, 255)
 PURPLE = (150, 0, 255)
 YELLOW = (0, 255, 255)
 
-FPS = 120
+FPS = 30
 
 GROUNDHEIGHT = 0
 SCORE = 0
+
+#characterState
+RUNNING = 0
+JUMPING = 1
