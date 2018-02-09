@@ -50,9 +50,11 @@ class Game:
 		if GroundRelativeX < ScreenWidth:
 			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHight - self.GROUNDHEIGHT))	
 
-	def drawCharacter(self, Character, action, timeInAction, animationLength):
+	def drawCharacter(self, Character, animationStart, animationLength):
+		action = Character.getCharacterState()
+		timeInAction = Character.getTimeInAction()
 
 		if action == RUNNING:
-			Character.draw(self.WindowSurface, timeInAction % animationLength, 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
-		elif action == JUMPING:
-			Character.draw(self.WindowSurface, timeInAction % animationLength, 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
+			Character.draw(self.WindowSurface, timeInAction % animationLength + animationStart, Character.getPlayer() * 30 + 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
+		elif action == JUMPINGUP or action == JUMPINGDOWN:
+			Character.draw(self.WindowSurface, timeInAction % animationLength + animationStart, Character.getPlayer() * 30 + 100, ScreenHight - self.GROUNDHEIGHT, (0,0))

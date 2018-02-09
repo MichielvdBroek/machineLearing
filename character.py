@@ -1,17 +1,22 @@
 from pygame.locals import *
+from Values import RUNNING, JUMPINGUP, JUMPINGDOWN, JUMPHEIGHT
 
 class spriteSheet:
-	def __init__(self, PG, filename, coloms, rows):
+	def __init__(self, PG, filename, coloms, rows, playerNr):
 		#coloms = 8
 		#rows = 0
 		pygame = PG
+
+		self.JumpOffset = 0
 		
+		self.PlayerNr = playerNr
 		self.Sheet = pygame.image.load(filename).convert_alpha()
 		self.Coloms = coloms
 		self.Rows = rows
 		self.CellCount = self.Coloms * self.Rows
 		self.SheetPixSize = self.Sheet.get_rect()
 		self.TimeInAction = 0
+		self.State = RUNNING
 
 		self.CellWidth = self.SheetPixSize.width / self.Coloms
 		self.CellHeight = self.SheetPixSize.height / self.Rows
@@ -21,10 +26,47 @@ class spriteSheet:
 	def draw(self, surface, spriteNr, x, y, offset = (0,0)):
 
 		self.TimeInAction += 1
-		surface.blit(self.Sheet, (x + offset[0], y + offset[1] - self.CellHeight), self.Cells[spriteNr])
+		surface.blit(self.Sheet, (x + offset[0], y + offset[1] - self.JumpOffset - self.CellHeight), self.Cells[spriteNr])
+
+	def getPlayer(self):
+		return self.PlayerNr
 
 	def resetTimeInAction(self):
 		self.TimeInAction = 0
 
 	def getTimeInAction(self):
 		return self.TimeInAction
+
+	def setCharacterState(self, state):
+		self.State = state
+
+	def getCharacterState(self):
+		return self.State
+
+
+	def jump(self):
+		if self.State == JUMPINGUP:
+			self.JumpOffset += 25
+
+		if self.State == JUMPINGDOWN:
+			self.JumpOffset -= 25
+
+	def jumpPressed(self):
+		if self.JumpOffset < JUMPHEIGHT and self.State != JUMPINGDOWN:
+			self.State = JUMPINGUP
+
+		elif self.JumpOffset >= JUMPHEIGHT:
+			self.State = JUMPINGDOWN
+
+		if self.JumpOffset == 0 and self.State == JUMPINGDOWN:
+			self.State = RUNNING
+
+		self.jump()
+
+	def jumpNotPressed(self):
+		if self.JumpOffset > 0:
+			self.State = JUMPINGDOWN
+		else:
+			self.State = RUNNING
+
+		self.jump()
