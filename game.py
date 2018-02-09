@@ -1,8 +1,10 @@
 import pygame
 import sys
 import time
+
 from pygame.locals import *
 from Values import *
+from character import spriteSheet
 
 class Game:
 
@@ -13,51 +15,44 @@ class Game:
 #	GroundCorX = 0
 #	GROUNDHEIGHT = 0
 
-	def getGroundHeight(this):
-		global GROUNDHEIGHT
-		return GROUNDHEIGHT
+	def getGroundHeight(self):
+		return self.GROUNDHEIGHT
 
-	def initialize(this, PG):
-		global WindowSurface 
-		global BackGround
-		global Ground
-		global BackGroundCorX
-		global GroundCorX
-		global GROUNDHEIGHT
+	def __init__(self, PG):
 
 		pygame = PG
-		WindowSurface = pygame.display.set_mode((ScreenWidth, ScreenHight))
-		BackGround = pygame.image.load("sources/mountain.bmp").convert()
-		Ground = pygame.image.load("sources/ground.bmp").convert()
-		BackGroundCorX = 0
-		GroundCorX = 0
-		GROUNDHEIGHT = Ground.get_rect().height
+		self.WindowSurface = pygame.display.set_mode((ScreenWidth, ScreenHight))
+		self.BackGround = pygame.image.load("sources/mountain.bmp").convert()
+		self.Ground = pygame.image.load("sources/ground.bmp").convert()
+		self.BackGroundCorX = 0
+		self.GroundCorX = 0
+		self.GROUNDHEIGHT = self.Ground.get_rect().height
 		pygame.display.set_caption('Runner')
 
-	def moveBackGround(this):
+	def moveBackGround(self):
 		#movebackground 
-		global WindowSurface
-		global BackGround
-		global BackGroundCorX
 
-		BackGroundCorX -= 1
-		BackGroundRelativeX = BackGroundCorX % BackGround.get_rect().width
+		self.BackGroundCorX -= 5
+		BackGroundRelativeX = self.BackGroundCorX % self.BackGround.get_rect().width
 
 		#draw infinite backGround
-		WindowSurface.blit(BackGround, (BackGroundRelativeX - BackGround.get_rect().width, 0))
+		self.WindowSurface.blit(self.BackGround, (BackGroundRelativeX - self.BackGround.get_rect().width, 0))
 		if BackGroundRelativeX < ScreenWidth:
-			WindowSurface.blit(BackGround, (BackGroundRelativeX, 0))
+			self.WindowSurface.blit(self.BackGround, (BackGroundRelativeX, 0))
 
-	def moveGround(this):
+	def moveGround(self):
 		#move backGround and ground
-		global WindowSurface
-		global Ground
-		global GroundCorX
-
-		GroundCorX -= 5
-		GroundRelativeX = GroundCorX % Ground.get_rect().width
+		self.GroundCorX -= 25
+		GroundRelativeX = self.GroundCorX % self.Ground.get_rect().width
 
 		#draw infinite Ground
-		WindowSurface.blit(Ground, (GroundRelativeX - Ground.get_rect().width, ScreenHight - GROUNDHEIGHT))
+		self.WindowSurface.blit(self.Ground, (GroundRelativeX - self.Ground.get_rect().width, ScreenHight - self.GROUNDHEIGHT))
 		if GroundRelativeX < ScreenWidth:
-			WindowSurface.blit(Ground, (GroundRelativeX, ScreenHight - GROUNDHEIGHT))	
+			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHight - self.GROUNDHEIGHT))	
+
+	def drawCharacter(self, Character, action, timeInAction, animationLength):
+
+		if action == RUNNING:
+			Character.draw(self.WindowSurface, timeInAction % animationLength, 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
+		elif action == JUMPING:
+			Character.draw(self.WindowSurface, timeInAction % animationLength, 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
