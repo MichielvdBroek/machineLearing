@@ -8,6 +8,12 @@ class spriteSheet:
 		pygame = PG
 
 		self.JumpOffset = 0
+		self.RunningStart = 0
+		self.RunningLength = 0
+		self.JumpingUpStart = 0
+		self.JumpingUpLength = 0
+		self.JumpingDownStart = 0
+		self.JumpingDownLength = 0
 		
 		self.PlayerNr = playerNr
 		self.Sheet = pygame.image.load(filename).convert_alpha()
@@ -22,6 +28,40 @@ class spriteSheet:
 		self.CellHeight = self.SheetPixSize.height / self.Rows
 
 		self.Cells = list([(index %self. Coloms * self.CellWidth, index / self.Coloms * self.CellHeight, self.CellWidth, self.CellHeight) for index in range(self.CellCount)])
+
+	def setAnimationStart(self, state, start):
+		if state == RUNNING:
+			self.RunningStart = start
+		elif state == JUMPINGUP:
+			self.JumpingUpStart = start
+		elif state == JUMPINGDOWN:
+			self.JumpingDownStart = start
+
+	def getAnimationStart(self):
+		if self.State == RUNNING:
+			return self.RunningStart
+		elif self.State == JUMPINGUP:
+			return self.JumpingUpStart
+		elif self.State == JUMPINGDOWN:
+			return self.JumpingDownStart
+
+	def setAnimationLength(self, state, length):
+		if state == RUNNING:
+			self.RunningLength = length
+		elif state == JUMPINGUP:
+			self.JumpingUpLength = length
+		elif state == JUMPINGDOWN:
+			self.JumpingDownLength = length
+
+
+	def getAnimationLength(self):
+		if self.State == RUNNING:
+			return self.RunningLength
+		elif self.State == JUMPINGUP:
+			return self.JumpingUpLength
+		elif self.State == JUMPINGDOWN:
+			return self.JumpingDownLength
+
 
 	def draw(self, surface, spriteNr, x, y, offset = (0,0)):
 

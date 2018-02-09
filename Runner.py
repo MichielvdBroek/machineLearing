@@ -11,8 +11,23 @@ import character
 #initialize
 pygame.init()
 game = Game(pygame)
+
 character1 = spriteSheet(pygame, "sources/kirby.png", 8, 1, 1)
+character1.setAnimationStart(RUNNING, 0)
+character1.setAnimationLength(RUNNING, 8)
+character1.setAnimationStart(JUMPINGUP, 7)
+character1.setAnimationLength(JUMPINGUP, 1)
+character1.setAnimationStart(JUMPINGDOWN, 7)
+character1.setAnimationLength(JUMPINGDOWN, 1)
+
 character2 = spriteSheet(pygame, "sources/mario.png", 5, 1, 2)
+character2.setAnimationStart(RUNNING, 0)
+character2.setAnimationLength(RUNNING, 5)
+character2.setAnimationStart(JUMPINGUP, 4)
+character2.setAnimationLength(JUMPINGUP, 1)
+character2.setAnimationStart(JUMPINGDOWN, 4)
+character2.setAnimationLength(JUMPINGDOWN, 1)
+
 Clock = pygame.time.Clock()
 
 
@@ -31,13 +46,13 @@ while True:
 		character1.jumpPressed()
 	else :
 		character1.jumpNotPressed()
-		
+
 	game.moveBackGround()
 	game.moveGround()
 
 	#draw Running
-	game.drawCharacter(character1, 0, 8)
-	game.drawCharacter(character2, 0, 5)
+	game.drawCharacter(character1, character1.getAnimationStart(), character1.getAnimationLength())
+	game.drawCharacter(character2, character2.getAnimationStart(), character2.getAnimationLength())
 
 	pygame.display.update()
 	Clock.tick(FPS)
