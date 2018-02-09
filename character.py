@@ -86,10 +86,13 @@ class spriteSheet:
 
 	def jump(self):
 		if self.State == JUMPINGUP:
-			self.JumpOffset += 25
+			self.JumpOffset += 35 - self.JumpOffset * 30 / JUMPHEIGHT
 
 		if self.State == JUMPINGDOWN:
-			self.JumpOffset -= 25
+			self.JumpOffset -= 35  - self.JumpOffset * 30 / JUMPHEIGHT
+
+		if self.JumpOffset < 0:
+			self.JumpOffset = 0
 
 	def jumpPressed(self):
 		if self.JumpOffset < JUMPHEIGHT and self.State != JUMPINGDOWN:
@@ -98,7 +101,7 @@ class spriteSheet:
 		elif self.JumpOffset >= JUMPHEIGHT:
 			self.State = JUMPINGDOWN
 
-		if self.JumpOffset == 0 and self.State == JUMPINGDOWN:
+		if self.JumpOffset <= 0 and self.State == JUMPINGDOWN:
 			self.State = RUNNING
 
 		self.jump()
