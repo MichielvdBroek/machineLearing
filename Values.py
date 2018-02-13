@@ -1,5 +1,5 @@
 ScreenWidth = 1800
-ScreenHight = 500
+ScreenHeight = 500
 
 WHITE = (255, 255, 255)
 BLACK = (255, 255, 255)
@@ -12,7 +12,6 @@ YELLOW = (0, 255, 255)
 
 FPS = 30
 
-GROUNDHEIGHT = 0
 JUMPHEIGHT = 400
 SCORE = 0
 

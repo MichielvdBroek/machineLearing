@@ -63,6 +63,14 @@ class spriteSheet:
 			return self.JumpingDownLength
 
 
+	def animateCharacter(self, windowSurface, height):
+
+		if self.State == RUNNING:
+			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), self.getPlayer() * 30 + 100, height, (0,0))
+		elif self.State == JUMPINGUP or self.State == JUMPINGDOWN:
+			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), self.getPlayer() * 30 + 100, height, (0,0))
+
+
 	def draw(self, surface, spriteNr, x, y, offset = (0,0)):
 
 		self.TimeInAction += 1

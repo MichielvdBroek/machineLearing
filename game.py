@@ -1,10 +1,12 @@
 import pygame
 import sys
 import time
+import random
 
 from pygame.locals import *
 from Values import *
 from character import spriteSheet
+from thorns import *
 
 class Game:
 
@@ -18,15 +20,19 @@ class Game:
 	def getGroundHeight(self):
 		return self.GROUNDHEIGHT
 
+	def getWindowSurface(self):
+		return self.WindowSurface
+
 	def __init__(self, PG):
 
 		pygame = PG
-		self.WindowSurface = pygame.display.set_mode((ScreenWidth, ScreenHight))
+		self.WindowSurface = pygame.display.set_mode((ScreenWidth, ScreenHeight))
 		self.BackGround = pygame.image.load("sources/mountain.bmp").convert()
 		self.Ground = pygame.image.load("sources/ground.bmp").convert()
 		self.BackGroundCorX = 0
 		self.GroundCorX = 0
 		self.GROUNDHEIGHT = self.Ground.get_rect().height
+		self.Thorns  = []
 		pygame.display.set_caption('Runner')
 
 	def moveBackGround(self):
@@ -46,15 +52,21 @@ class Game:
 		GroundRelativeX = self.GroundCorX % self.Ground.get_rect().width
 
 		#draw infinite Ground
-		self.WindowSurface.blit(self.Ground, (GroundRelativeX - self.Ground.get_rect().width, ScreenHight - self.GROUNDHEIGHT))
+		self.WindowSurface.blit(self.Ground, (GroundRelativeX - self.Ground.get_rect().width, ScreenHeight - self.GROUNDHEIGHT))
 		if GroundRelativeX < ScreenWidth:
-			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHight - self.GROUNDHEIGHT))	
+			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHeight - self.GROUNDHEIGHT))	
 
-	def drawCharacter(self, Character, animationStart, animationLength):
-		action = Character.getCharacterState()
-		timeInAction = Character.getTimeInAction()
 
-		if action == RUNNING:
-			Character.draw(self.WindowSurface, timeInAction % animationLength + animationStart, Character.getPlayer() * 30 + 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
-		elif action == JUMPINGUP or action == JUMPINGDOWN:
-			Character.draw(self.WindowSurface, timeInAction % animationLength + animationStart, Character.getPlayer() * 30 + 100, ScreenHight - self.GROUNDHEIGHT, (0,0))
+	def spawnThorn(self):
+
+		length = random.randint(self.GROUNDHEIGHT, ScreenHeight - self.GROUNDHEIGHT)
+		side = length % 2
+		speed = 25
+		imageLocation = "/sources/thorns.png"
+		thorn = Thorn(length, side, speed, imageLocation)
+		self.Thorns += thorn
+
+	def moveThorns(self):
+		print(len(self.Thorns))
+	#	def moveThorn():
+		#move thorn

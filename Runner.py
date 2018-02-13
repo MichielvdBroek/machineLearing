@@ -51,8 +51,13 @@ while True:
 	game.moveGround()
 
 	#draw Running
-	game.drawCharacter(character1, character1.getAnimationStart(), character1.getAnimationLength())
-	game.drawCharacter(character2, character2.getAnimationStart(), character2.getAnimationLength())
+	character1.animateCharacter(game.getWindowSurface(), ScreenHeight - game.getGroundHeight())
+	character2.animateCharacter(game.getWindowSurface(), ScreenHeight - game.getGroundHeight())
+
+
+	game.moveThorns()
+	game.spawnThorn()
+	game.moveThorns()
 
 	pygame.display.update()
 	Clock.tick(FPS)
