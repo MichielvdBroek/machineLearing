@@ -59,14 +59,30 @@ class Game:
 
 	def spawnThorn(self):
 
-		length = random.randint(self.GROUNDHEIGHT, ScreenHeight - self.GROUNDHEIGHT)
+		length = random.randint(self.GROUNDHEIGHT * 2, ScreenHeight - self.GROUNDHEIGHT * 4)
 		side = length % 2
-		speed = 25
-		imageLocation = "/sources/thorns.png"
-		thorn = Thorn(length, side, speed, imageLocation)
-		self.Thorns += thorn
+		imageLocation = "sources/Thorns.png"
+		thorn = Thorn(length, side, THORNSPEED, imageLocation)
+		self.Thorns.append(thorn)
+
+
+	def drawThorns(self):
+		for thorn in self.Thorns:
+			thorn.draw(self.WindowSurface, self.GROUNDHEIGHT)
+	#pygame.image.load("sources/ground.bmp").convert()
 
 	def moveThorns(self):
-		print(len(self.Thorns))
+		ID = 0
+		for thorn in self.Thorns:
+			if thorn.getPosition() > 0:
+				thorn.move()
+			else:
+				del self.Thorns[ID]
+			ID += 1
+
+	def checkCollision(self, character):
+		if character.getSize():
+			a = 0
+
 	#	def moveThorn():
 		#move thorn

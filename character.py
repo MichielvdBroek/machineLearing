@@ -29,6 +29,12 @@ class spriteSheet:
 
 		self.Cells = list([(index %self. Coloms * self.CellWidth, index / self.Coloms * self.CellHeight, self.CellWidth, self.CellHeight) for index in range(self.CellCount)])
 
+	def getSize(self):
+		return self.Sheet.get_rect()
+
+#	def getPosition(self):
+#		return 
+
 	def setAnimationStart(self, state, start):
 		if state == RUNNING:
 			self.RunningStart = start

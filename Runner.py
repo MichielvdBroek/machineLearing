@@ -29,7 +29,7 @@ character2.setAnimationStart(JUMPINGDOWN, 4)
 character2.setAnimationLength(JUMPINGDOWN, 1)
 
 Clock = pygame.time.Clock()
-
+GameTicks = 0
 
 #game loop
 while True:
@@ -54,13 +54,19 @@ while True:
 	character1.animateCharacter(game.getWindowSurface(), ScreenHeight - game.getGroundHeight())
 	character2.animateCharacter(game.getWindowSurface(), ScreenHeight - game.getGroundHeight())
 
-
+	if GameTicks % 25 == 0:
+		game.spawnThorn()
+	
 	game.moveThorns()
-	game.spawnThorn()
-	game.moveThorns()
+	game.drawThorns()
+	if game.checkCollision(character1):
+		print "char 1 dies"
+	if game.checkCollision(character2):
+		print "char 2 dies"
 
 	pygame.display.update()
 	Clock.tick(FPS)
+	GameTicks += 1
 	SCORE += 1
 
 
