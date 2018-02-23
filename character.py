@@ -114,7 +114,6 @@ class Character:
 
 
 	def jump(self):
-		print(self.State)
 		if self.State == JUMPINGUP:
 			self.JumpOffset += 35 - self.JumpOffset * 30 / JUMPHEIGHT
 
