@@ -4,7 +4,7 @@ import time
 import random
 
 from pygame.locals import *
-from Values import *
+from Settings import *
 from characterStates import *
 from character import spriteSheet
 from thorns import *

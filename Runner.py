@@ -3,7 +3,7 @@ import sys
 import time
 
 from pygame.locals import *
-from Values import *
+from Settings import *
 from game import *
 import character
 

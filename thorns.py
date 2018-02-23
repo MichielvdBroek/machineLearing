@@ -1,7 +1,7 @@
 import pygame
 
 from pygame.locals import *
-from Values import ScreenWidth, ScreenHeight
+from Settings import ScreenWidth, ScreenHeight
 
 class Thorn:
 	def __init__(self, length, side, speed, imageLocation, groundHeight):

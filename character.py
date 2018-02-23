@@ -1,6 +1,6 @@
 from pygame.locals import *
 from characterStates import *
-from Values import ScreenHeight
+from Settings import ScreenHeight
 
 class spriteSheet:
 	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight, player):
