@@ -1,8 +1,8 @@
 from pygame.locals import *
-from Values import RUNNING, JUMPINGUP, JUMPINGDOWN, JUMPHEIGHT
+from Values import RUNNING, JUMPINGUP, JUMPINGDOWN, JUMPHEIGHT, ScreenHeight
 
 class spriteSheet:
-	def __init__(self, PG, filename, coloms, rows, playerNr):
+	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight):
 		#coloms = 8
 		#rows = 0
 		pygame = PG
@@ -27,6 +27,9 @@ class spriteSheet:
 		self.CellWidth = self.SheetPixSize.width / self.Coloms
 		self.CellHeight = self.SheetPixSize.height / self.Rows
 
+		self.x = 300 - self.PlayerNr * 30
+		self.y = ScreenHeight - runningHeight
+		print(runningHeight)
 		self.Cells = list([(index %self. Coloms * self.CellWidth, index / self.Coloms * self.CellHeight, self.CellWidth, self.CellHeight) for index in range(self.CellCount)])
 
 	def getSize(self):
@@ -69,18 +72,28 @@ class spriteSheet:
 			return self.JumpingDownLength
 
 
-	def animateCharacter(self, windowSurface, height):
+	def animateCharacter(self, windowSurface):
 
 		if self.State == RUNNING:
-			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), self.getPlayer() * 30 + 100, height, (0,0))
+			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), (0,0))
 		elif self.State == JUMPINGUP or self.State == JUMPINGDOWN:
-			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), self.getPlayer() * 30 + 100, height, (0,0))
+			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), (0,0))
 
 
-	def draw(self, surface, spriteNr, x, y, offset = (0,0)):
+	def draw(self, surface, spriteNr, offset):
 
 		self.TimeInAction += 1
-		surface.blit(self.Sheet, (x + offset[0], y + offset[1] - self.JumpOffset - self.CellHeight), self.Cells[spriteNr])
+		surface.blit(self.Sheet, (self.x + offset[0], self.y + offset[1] - self.JumpOffset - self.CellHeight), self.Cells[spriteNr])
+
+	def getCollission(self):
+		collission = []
+		#bottom left point of character image
+		collission.append(self.x) 
+		collission.append(self.y - self.JumpOffset - self.CellHeight)
+		#bottom right point of character image 
+		collission.append(self.x + (self.CellWidth))
+		collission.append(self.y - (self.CellHeight) - self.JumpOffset - self.CellHeight)
+		return collission
 
 	def getPlayer(self):
 		return self.PlayerNr

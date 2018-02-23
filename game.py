@@ -56,7 +56,8 @@ class Game:
 		if GroundRelativeX < ScreenWidth:
 			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHeight - self.GROUNDHEIGHT))	
 
-
+#these should be in the thorn class.
+#draw should become animate.
 	def spawnThorn(self):
 
 		length = random.randint(self.GROUNDHEIGHT * 2, ScreenHeight - self.GROUNDHEIGHT * 4)
