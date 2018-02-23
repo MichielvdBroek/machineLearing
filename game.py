@@ -56,20 +56,19 @@ class Game:
 		if GroundRelativeX < ScreenWidth:
 			self.WindowSurface.blit(self.Ground, (GroundRelativeX, ScreenHeight - self.GROUNDHEIGHT))	
 
-#these should be in the thorn class.
 #draw should become animate.
 	def spawnThorn(self):
 
 		length = random.randint(self.GROUNDHEIGHT * 2, ScreenHeight - self.GROUNDHEIGHT * 4)
 		side = length % 2
 		imageLocation = "sources/Thorns.png"
-		thorn = Thorn(length, side, THORNSPEED, imageLocation)
+		thorn = Thorn(length, side, THORNSPEED, imageLocation, self.GROUNDHEIGHT)
 		self.Thorns.append(thorn)
 
 
 	def drawThorns(self):
 		for thorn in self.Thorns:
-			thorn.draw(self.WindowSurface, self.GROUNDHEIGHT)
+			thorn.animate(self.WindowSurface)
 	#pygame.image.load("sources/ground.bmp").convert()
 
 	def moveThorns(self):
@@ -82,8 +81,22 @@ class Game:
 			ID += 1
 
 	def checkCollision(self, character):
-		if character.getSize():
-			a = 0
+		for thorn in self.Thorns:
+			charCollission = character.getCollission()
+			thornCollission = thorn.getCollission()
+			#character links onder zit in een thorn
+			if ((charCollission[0] >= thornCollission[0] and charCollission[0] <= thornCollission[2] \
+					and charCollission[1] >= thornCollission[1] and charCollission[1] <= thornCollission[3]) \
+			#character rechts onder zit in een thorn
+				or (charCollission[2] >= thornCollission[0] and charCollission[2] <= thornCollission[2] \
+					and charCollission[1] >= thornCollission[1] and charCollission[1] <= thornCollission[3]) \
+			#character rechts onder zit in een thorn
+				or (charCollission[0] >= thornCollission[0] and charCollission[0] <= thornCollission[2] \
+					and charCollission[3] >= thornCollission[1] and charCollission[3] <= thornCollission[3]) \
+			#character rechts onder zit in een thorn
+				or (charCollission[2] >= thornCollission[0] and charCollission[2] <= thornCollission[2] \
+					and charCollission[3] >= thornCollission[1] and charCollission[3] <= thornCollission[3])):
+				if (character.getPlayer() == 1):
 
 	#	def moveThorn():
 		#move thorn

@@ -29,7 +29,6 @@ class spriteSheet:
 
 		self.x = 300 - self.PlayerNr * 30
 		self.y = ScreenHeight - runningHeight
-		print(runningHeight)
 		self.Cells = list([(index %self. Coloms * self.CellWidth, index / self.Coloms * self.CellHeight, self.CellWidth, self.CellHeight) for index in range(self.CellCount)])
 
 	def getSize(self):
