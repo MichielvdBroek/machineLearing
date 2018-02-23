@@ -70,7 +70,6 @@ class Game:
 	def drawThorns(self):
 		for thorn in self.Thorns:
 			thorn.animate(self.WindowSurface)
-	#pygame.image.load("sources/ground.bmp").convert()
 
 	def moveThorns(self):
 		ID = 0
@@ -99,6 +98,3 @@ class Game:
 					and charCollission[3] >= thornCollission[1] and charCollission[3] <= thornCollission[3])):
 				return True
 			return False
-
-	#	def moveThorn():
-		#move thorn

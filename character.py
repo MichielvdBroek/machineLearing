@@ -3,7 +3,7 @@ from characterStates import *
 from Values import ScreenHeight
 
 class spriteSheet:
-	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight):
+	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight, player):
 		#coloms = 8
 		#rows = 0
 		pygame = PG
@@ -18,6 +18,7 @@ class spriteSheet:
 		self.JumpingDownLength = 0
 		
 		self.PlayerNr = playerNr
+		self.Player = player
 		self.Sheet = pygame.image.load(filename).convert_alpha()
 		self.Coloms = coloms
 		self.Rows = rows
@@ -32,6 +33,9 @@ class spriteSheet:
 		self.x = 300 - self.PlayerNr * 30
 		self.y = ScreenHeight - runningHeight
 		self.Cells = list([(index %self. Coloms * self.CellWidth, index / self.Coloms * self.CellHeight, self.CellWidth, self.CellHeight) for index in range(self.CellCount)])
+
+	def getIsPlayer(self):
+		return self.Player
 
 	def getSize(self):
 		return self.Sheet.get_rect()
