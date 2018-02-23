@@ -1,5 +1,6 @@
 from pygame.locals import *
-from Values import RUNNING, JUMPINGUP, JUMPINGDOWN, JUMPHEIGHT, ScreenHeight
+from characterStates import *
+from Values import ScreenHeight
 
 class spriteSheet:
 	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight):
@@ -7,6 +8,7 @@ class spriteSheet:
 		#rows = 0
 		pygame = PG
 
+		self.Alive = True
 		self.JumpOffset = 0
 		self.RunningStart = 0
 		self.RunningLength = 0
@@ -139,3 +141,9 @@ class spriteSheet:
 			self.State = RUNNING
 
 		self.jump()
+
+	def getAlive(self):
+		return self.Alive
+
+	def Die(self):
+		self.Alive = False

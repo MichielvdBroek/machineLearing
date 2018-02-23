@@ -1,0 +1,7 @@
+
+JUMPHEIGHT = 400
+
+#characterState
+RUNNING = 0
+JUMPINGUP = 1
+JUMPINGDOWN = 2

@@ -5,6 +5,7 @@ import random
 
 from pygame.locals import *
 from Values import *
+from characterStates import *
 from character import spriteSheet
 from thorns import *
 
@@ -96,7 +97,8 @@ class Game:
 			#character rechts onder zit in een thorn
 				or (charCollission[2] >= thornCollission[0] and charCollission[2] <= thornCollission[2] \
 					and charCollission[3] >= thornCollission[1] and charCollission[3] <= thornCollission[3])):
-				if (character.getPlayer() == 1):
+				return True
+			return False
 
 	#	def moveThorn():
 		#move thorn
