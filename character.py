@@ -2,7 +2,7 @@ from pygame.locals import *
 from characterStates import *
 from Settings import ScreenHeight
 
-class spriteSheet:
+class Character:
 	def __init__(self, PG, filename, coloms, rows, playerNr, runningHeight, player):
 		#coloms = 8
 		#rows = 0
@@ -149,5 +149,8 @@ class spriteSheet:
 	def getAlive(self):
 		return self.Alive
 
-	def Die(self):
+	def die(self):
 		self.Alive = False
+
+	def getCharacterString(self, score):
+		return str(self.PlayerNr) + ":" + str(score)

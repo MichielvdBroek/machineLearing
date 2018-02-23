@@ -6,7 +6,7 @@ import random
 from pygame.locals import *
 from Settings import *
 from characterStates import *
-from character import spriteSheet
+from character import Character
 from thorns import *
 
 class Game:

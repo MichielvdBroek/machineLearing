@@ -6,15 +6,22 @@ from pygame.locals import *
 from Settings import *
 from game import *
 import character
+from fileIO import *
+
+
+pygame.init()
+fileIO = FIO()
+if (RESETFILESONBOOT):
+		fileIO.resetFiles()
 
 endProgram = False
 gameRunning = True
+
 while (endProgram == False):
 
 	#initialize
-	pygame.init()
 	game = Game(pygame)
-
+	
 	characterNr = 0
 	characters = []
 	Score = INITIALSCORE
@@ -29,7 +36,7 @@ while (endProgram == False):
 	
 	while (playerCount > 0):
 		characterNr += 1
-		player = spriteSheet(pygame, "sources/kirby.png", 8, 1, characterNr, game.getGroundHeight(), True)
+		player = Character(pygame, "sources/kirby.png", 8, 1, characterNr, game.getGroundHeight(), True)
 		player.setAnimationStart(RUNNING, 0)
 		player.setAnimationLength(RUNNING, 8)
 		player.setAnimationStart(JUMPINGUP, 7)
@@ -41,7 +48,7 @@ while (endProgram == False):
 
 	while(npcCount  > 0):
 		characterNr += 1
-		character = spriteSheet(pygame, "sources/mario.png", 5, 1, characterNr, game.getGroundHeight(), False)
+		character = Character(pygame, "sources/mario.png", 5, 1, characterNr, game.getGroundHeight(), False)
 		character.setAnimationStart(RUNNING, 0)
 		character.setAnimationLength(RUNNING, 5)
 		character.setAnimationStart(JUMPINGUP, 4)
@@ -62,7 +69,8 @@ while (endProgram == False):
 	for event in pygame.event.get():
 		if (event.type == QUIT):
 			endProgram = True
-
+	if (gameRunning):
+		fileIO.newGame()
 	#game loop
 	while (gameRunning):
 		endGame = False
@@ -101,11 +109,11 @@ while (endProgram == False):
 				charactersAlive = True
 				character.animateCharacter(game.getWindowSurface())
 				if (game.checkCollision(character)):
-					character.Die()
+					character.die()
 					if (character.getIsPlayer()):
-						print("player score: " + str(Score))
+						fileIO.appendToFile("playerscores.txt", character.getCharacterString(Score))
 					else:
-						print("AI score: " + str(Score))
+						fileIO.appendToFile("AIscore.txt", character.getCharacterString(Score))
 					#save Score
 
 		if (charactersAlive == False):
@@ -120,6 +128,7 @@ while (endProgram == False):
 		Score += 1
 
 	gameRunning = AUTORESTART
+
 pygame.quit()
 sys.exit()
 
