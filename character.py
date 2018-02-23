@@ -48,7 +48,7 @@ class Character:
 			self.RunningStart = start
 		elif state == JUMPINGUP:
 			self.JumpingUpStart = start
-		elif state == JUMPINGDOWN:
+		elif state == JUMPINGDOWN or state == FALLINGDOWN:
 			self.JumpingDownStart = start
 
 	def getAnimationStart(self):
@@ -56,7 +56,7 @@ class Character:
 			return self.RunningStart
 		elif self.State == JUMPINGUP:
 			return self.JumpingUpStart
-		elif self.State == JUMPINGDOWN:
+		elif self.State == JUMPINGDOWN or self.State == FALLINGDOWN:
 			return self.JumpingDownStart
 
 	def setAnimationLength(self, state, length):
@@ -64,7 +64,7 @@ class Character:
 			self.RunningLength = length
 		elif state == JUMPINGUP:
 			self.JumpingUpLength = length
-		elif state == JUMPINGDOWN:
+		elif state == JUMPINGDOWN or state == FALLINGDOWN:
 			self.JumpingDownLength = length
 
 
@@ -73,16 +73,13 @@ class Character:
 			return self.RunningLength
 		elif self.State == JUMPINGUP:
 			return self.JumpingUpLength
-		elif self.State == JUMPINGDOWN:
+		elif self.State == JUMPINGDOWN or self.State == FALLINGDOWN:
 			return self.JumpingDownLength
 
 
 	def animateCharacter(self, windowSurface):
 
-		if self.State == RUNNING:
-			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), (0,0))
-		elif self.State == JUMPINGUP or self.State == JUMPINGDOWN:
-			self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), (0,0))
+		self.draw(windowSurface, self.TimeInAction % self.getAnimationLength() + self.getAnimationStart(), (0,0))
 
 
 	def draw(self, surface, spriteNr, offset):
@@ -117,23 +114,27 @@ class Character:
 
 
 	def jump(self):
+		print(self.State)
 		if self.State == JUMPINGUP:
 			self.JumpOffset += 35 - self.JumpOffset * 30 / JUMPHEIGHT
 
-		if self.State == JUMPINGDOWN:
+		if self.State == FALLINGDOWN:
 			self.JumpOffset -= 35  - self.JumpOffset * 30 / JUMPHEIGHT
+
+		if self.State == JUMPINGDOWN:
+			self.JumpOffset -= 70 - self.JumpOffset * 50 / JUMPHEIGHT
 
 		if self.JumpOffset < 0:
 			self.JumpOffset = 0
 
 	def jumpPressed(self):
-		if self.JumpOffset < JUMPHEIGHT and self.State != JUMPINGDOWN:
+		if self.JumpOffset < JUMPHEIGHT and self.State != JUMPINGDOWN and self.State != FALLINGDOWN:
 			self.State = JUMPINGUP
 
 		elif self.JumpOffset >= JUMPHEIGHT:
-			self.State = JUMPINGDOWN
+			self.State = FALLINGDOWN
 
-		if self.JumpOffset <= 0 and self.State == JUMPINGDOWN:
+		if self.JumpOffset <= 0 and (self.State == JUMPINGDOWN or self.State == FALLINGDOWN):
 			self.State = RUNNING
 
 		self.jump()
