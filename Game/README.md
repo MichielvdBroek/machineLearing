@@ -12,3 +12,7 @@ pygame1.9.3
   "Png" library: libpng12-0
   "Jpeg" library: libjpeg62-dev
   "Scrap" library: 
+
+The game can be started with a terminal.
+1. move to the directory "/Game".
+2. start the game with "python Runner.py"
