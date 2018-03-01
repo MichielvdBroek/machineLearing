@@ -74,14 +74,16 @@ while (endProgram == False):
 	#game loop
 	while (gameRunning):
 		endGame = False
-
+		gameSpeed = FPS + Score / SPEEDUPDISTANCE
+		if gameSpeed >= MAXSPEED:
+			gameSpeed = MAXSPEED
 
 		for event in pygame.event.get():
 			if (event.type == QUIT):
 				endGame = True
 				endProgram = True
 
-		if (GameTicks % 25 == 0):
+		if (GameTicks % THORNDISTANCE == 0):
 			game.spawnThorn()
 		
 		game.moveBackGround()
@@ -123,7 +125,7 @@ while (endProgram == False):
 			gameRunning = False
 
 		pygame.display.update()
-		Clock.tick(FPS)
+		Clock.tick(gameSpeed)
 		GameTicks += 1
 		Score += 1
 
