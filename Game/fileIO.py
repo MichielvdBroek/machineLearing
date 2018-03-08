@@ -56,6 +56,9 @@ class FIO :
 		file.close
 
 	def resetFiles(self):
-		shutil.rmtree(self.Path)
+		try:
+			shutil.rmtree(self.Path)
+		except:
+			print("no scores found")
 		os.mkdir(self.Path)
 

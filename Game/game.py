@@ -98,3 +98,6 @@ class Game:
 					and charCollission[3] >= thornCollission[1] and charCollission[3] <= thornCollission[3])):
 				return True
 			return False
+
+	def getThorns(self):
+		return self.Thorns

@@ -14,6 +14,8 @@ fileIO = FIO()
 if (RESETFILESONBOOT):
 		fileIO.resetFiles()
 
+
+nrOfRestarts = TIMESTORESTART	
 endProgram = False
 gameRunning = True
 
@@ -64,6 +66,7 @@ while (endProgram == False):
 	k = pygame.key.get_pressed()
 	if (k[K_SPACE]):
 		gameRunning = True
+		nrOfRestarts = TIMESTORESTART
 
 
 	for event in pygame.event.get():
@@ -71,6 +74,9 @@ while (endProgram == False):
 			endProgram = True
 	if (gameRunning):
 		fileIO.newGame()
+
+
+
 	#game loop
 	while (gameRunning):
 		endGame = False
@@ -129,7 +135,13 @@ while (endProgram == False):
 		GameTicks += 1
 		Score += 1
 
-	gameRunning = AUTORESTART
+	#outside the game loop. when the game ends.
+	#checks if the game should restart or not.
+	if AUTORESTART  and nrOfRestarts > 0:
+		gameRunning = True
+		nrOfRestarts -= 1
+	else :
+		gameRunning = False
 
 pygame.quit()
 sys.exit()
