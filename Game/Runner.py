@@ -141,6 +141,7 @@ while (endProgram == False):
 		gameRunning = True
 		nrOfRestarts -= 1
 	else :
+		time.sleep(0.1)
 		gameRunning = False
 
 pygame.quit()
